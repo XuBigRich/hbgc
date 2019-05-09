@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.ProjectMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Project" >
+    <id column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="TID" property="tid" jdbcType="DECIMAL" />
+    <result column="CID" property="cid" jdbcType="DECIMAL" />
+    <result column="FDID" property="fdid" jdbcType="DECIMAL" />
+    <result column="CDID" property="cdid" jdbcType="DECIMAL" />
+    <result column="BID" property="bid" jdbcType="DECIMAL" />
+    <result column="VID" property="vid" jdbcType="DECIMAL" />
+    <result column="SID" property="sid" jdbcType="DECIMAL" />
+    <result column="AID" property="aid" jdbcType="DECIMAL" />
+    <result column="STAT" property="stat" jdbcType="DECIMAL" />
+    <result column="KID" property="kid" jdbcType="DECIMAL" />
+    <result column="MARY" property="mary" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PNO" property="pno" jdbcType="VARCHAR" />
+    <result column="YEAR" property="year" jdbcType="VARCHAR" />
+    <result column="RESS" property="ress" jdbcType="VARCHAR" />
+    <result column="LAT" property="lat" jdbcType="VARCHAR" />
+    <result column="LON" property="lon" jdbcType="VARCHAR" />
+    <result column="STAR" property="star" jdbcType="DATE" />
+    <result column="EN" property="en" jdbcType="DATE" />
+    <result column="TOTAL" property="total" jdbcType="DECIMAL" />
+    <result column="DETAIL" property="detail" jdbcType="VARCHAR" />
+    <result column="MON" property="mon" jdbcType="DECIMAL" />
+    <result column="HEAD" property="head" jdbcType="VARCHAR" />
+    <result column="MOB" property="mob" jdbcType="VARCHAR" />
+    <result column="DES" property="des" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PROJECT
+    where PID = #{pid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Project" useGeneratedKeys="true" >
+  <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="pid">
+    SELECT ENID.nextval AS pid FROM dual
+  </selectKey>
+    insert into PROJECT (PID,TID, CID, FDID,
+      CDID, BID, VID, SID, 
+      AID, STAT, KID, MARY, 
+      NAME, PNO, YEAR, RESS, 
+      LAT, LON, STAR, EN, 
+      TOTAL, DETAIL, MON, 
+      HEAD, MOB, DES)
+    values (#{pid,jdbcType=DECIMAL},#{tid,jdbcType=DECIMAL}, #{cid,jdbcType=DECIMAL}, #{fdid,jdbcType=DECIMAL},
+      #{cdid,jdbcType=DECIMAL}, #{bid,jdbcType=DECIMAL}, #{vid,jdbcType=DECIMAL}, #{sid,jdbcType=DECIMAL}, 
+      #{aid,jdbcType=DECIMAL}, #{stat,jdbcType=DECIMAL}, #{kid,jdbcType=DECIMAL}, #{mary,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{pno,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{ress,jdbcType=VARCHAR}, 
+      #{lat,jdbcType=VARCHAR}, #{lon,jdbcType=VARCHAR}, #{star,jdbcType=DATE}, #{en,jdbcType=DATE}, 
+      #{total,jdbcType=DECIMAL}, #{detail,jdbcType=VARCHAR}, #{mon,jdbcType=DECIMAL}, 
+      #{head,jdbcType=VARCHAR}, #{mob,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Project" >
+    update PROJECT
+    set TID = #{tid,jdbcType=DECIMAL},
+      CID = #{cid,jdbcType=DECIMAL},
+      FDID = #{fdid,jdbcType=DECIMAL},
+      CDID = #{cdid,jdbcType=DECIMAL},
+      BID = #{bid,jdbcType=DECIMAL},
+      VID = #{vid,jdbcType=DECIMAL},
+      SID = #{sid,jdbcType=DECIMAL},
+      AID = #{aid,jdbcType=DECIMAL},
+      STAT = #{stat,jdbcType=DECIMAL},
+      KID = #{kid,jdbcType=DECIMAL},
+      MARY = #{mary,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PNO = #{pno,jdbcType=VARCHAR},
+      YEAR = #{year,jdbcType=VARCHAR},
+      RESS = #{ress,jdbcType=VARCHAR},
+      LAT = #{lat,jdbcType=VARCHAR},
+      LON = #{lon,jdbcType=VARCHAR},
+      STAR = #{star,jdbcType=DATE},
+      EN = #{en,jdbcType=DATE},
+      TOTAL = #{total,jdbcType=DECIMAL},
+      DETAIL = #{detail,jdbcType=VARCHAR},
+      MON = #{mon,jdbcType=DECIMAL},
+      HEAD = #{head,jdbcType=VARCHAR},
+      MOB = #{mob,jdbcType=VARCHAR},
+      DES = #{des,jdbcType=VARCHAR}
+    where PID = #{pid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select PID, TID, CID, FDID, CDID, BID, VID, SID, AID, STAT, KID, MARY, NAME, PNO, 
+    YEAR, RESS, LAT, LON, STAR, EN, TOTAL, DETAIL, MON, HEAD, MOB, DES
+    from PROJECT
+    where PID = #{pid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PID, TID, CID, FDID, CDID, BID, VID, SID, AID, STAT, KID, MARY, NAME, PNO, 
+    YEAR, RESS, LAT, LON, STAR, EN, TOTAL, DETAIL, MON, HEAD, MOB, DES
+    from PROJECT
+  </select>
+  <select id="selectBynamOrTidOrKid" resultMap="BaseResultMap" parameterType="top.piao888.hbgc.dto.ProjectMessageDTO">
+    select *
+    from PROJECT
+    <trim prefix="where" prefixOverrides="and">
+      <if test="kid!=null and kid!=''">
+        and kid=#{kid}
+      </if>
+      <if test="tid!=null and tid!=''">
+        and tid=#{tid}
+      </if>
+      <if test="name!=null and name!=''">
+        and  name like '%'||#{name}||'%'
+      </if>
+    </trim>
+  </select>
+  <select id="selectAllCount" resultType="java.lang.Integer" >
+    select count(*) from PROJECT
+  </select>
+</mapper>

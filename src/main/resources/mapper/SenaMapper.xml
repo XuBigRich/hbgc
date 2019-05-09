@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.SenaMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Sena" >
+    <id column="SID" property="sid" jdbcType="DECIMAL" />
+    <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+    <result column="BID" property="bid" jdbcType="DECIMAL" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="FADE" property="fade" jdbcType="VARCHAR" />
+    <result column="RESS" property="ress" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="TACT" property="tact" jdbcType="VARCHAR" />
+    <result column="JOB" property="job" jdbcType="VARCHAR" />
+    <result column="MOB" property="mob" jdbcType="VARCHAR" />
+    <result column="EM" property="em" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="TIM" property="tim" jdbcType="DATE" />
+    <result column="DES" property="des" jdbcType="VARCHAR" />
+    <result column="STAT" property="stat" jdbcType="DECIMAL" />
+
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SENA
+    where SID = #{sid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Sena"  >
+    <!-- 在Mybatis中使用序列，order必须为"BEFORE" ，keyProperty对应Java实体的主键属性， -->
+    <selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="sid">
+      SELECT ENID.nextval AS sid FROM dual
+    </selectKey>
+    insert into SENA (SID, UNIT, BID, CODE,
+      FADE, RESS, TEL, TACT, 
+      JOB, MOB, EM, USERNAME, 
+      PASSWORD, TIM, DES, STAT
+      )
+    values (#{sid,jdbcType=DECIMAL},#{unit,jdbcType=VARCHAR}, #{bid,jdbcType=DECIMAL}, #{code,jdbcType=VARCHAR},
+      #{fade,jdbcType=VARCHAR}, #{ress,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{tact,jdbcType=VARCHAR}, 
+      #{job,jdbcType=VARCHAR}, #{mob,jdbcType=VARCHAR}, #{em,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{tim,jdbcType=DATE}, #{des,jdbcType=VARCHAR}, #{stat,jdbcType=DECIMAL}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Sena" >
+    update SENA
+    set UNIT = #{unit,jdbcType=VARCHAR},
+      BID = #{bid,jdbcType=DECIMAL},
+      CODE = #{code,jdbcType=VARCHAR},
+      FADE = #{fade,jdbcType=VARCHAR},
+      RESS = #{ress,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      TACT = #{tact,jdbcType=VARCHAR},
+      JOB = #{job,jdbcType=VARCHAR},
+      MOB = #{mob,jdbcType=VARCHAR},
+      EM = #{em,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      TIM = #{tim,jdbcType=DATE},
+      DES = #{des,jdbcType=VARCHAR},
+      STAT = #{stat,jdbcType=DECIMAL}
+    where SID = #{sid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SID, UNIT, BID, CODE, FADE, RESS, TEL, TACT, JOB, MOB, EM, USERNAME, PASSWORD, 
+    TIM, DES, STAT
+    from SENA
+    where SID = #{sid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SID, UNIT, BID, CODE, FADE, RESS, TEL, TACT, JOB, MOB, EM, USERNAME, PASSWORD, 
+    TIM, DES, STAT
+    from SENA
+  </select>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.StepfileMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Stepfile" >
+    <id column="SFID" property="sfid" jdbcType="DECIMAL" />
+    <result column="SID" property="sid" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="FN" property="fn" jdbcType="VARCHAR" />
+    <result column="TP" property="tp" jdbcType="VARCHAR" />
+    <result column="SIZ" property="siz" jdbcType="DECIMAL" />
+    <result column="TIM" property="tim" jdbcType="DATE" />
+    <result column="TXT" property="txt" jdbcType="BLOB" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from STEPFILE
+    where SFID = #{sfid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Stepfile" useGeneratedKeys="true" keyProperty="sfid" >
+    insert into STEPFILE (SID, PID, FN,
+      TP, SIZ, TIM, TXT
+      )
+    values (#{sid,jdbcType=DECIMAL}, #{pid,jdbcType=DECIMAL}, #{fn,jdbcType=VARCHAR}, 
+      #{tp,jdbcType=VARCHAR}, #{siz,jdbcType=DECIMAL}, #{tim,jdbcType=DATE}, #{txt,jdbcType=BLOB}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Stepfile" >
+    update STEPFILE
+    set SID = #{sid,jdbcType=DECIMAL},
+      PID = #{pid,jdbcType=DECIMAL},
+      FN = #{fn,jdbcType=VARCHAR},
+      TP = #{tp,jdbcType=VARCHAR},
+      SIZ = #{siz,jdbcType=DECIMAL},
+      TIM = #{tim,jdbcType=DATE},
+      TXT = #{txt,jdbcType=BLOB}
+    where SFID = #{sfid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SFID, SID, PID, FN, TP, SIZ, TIM, TXT
+    from STEPFILE
+    where SFID = #{sfid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SFID, SID, PID, FN, TP, SIZ, TIM, TXT
+    from STEPFILE
+  </select>
+</mapper>

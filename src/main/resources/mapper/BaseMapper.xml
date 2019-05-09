@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.BaseMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Base" >
+    <id column="BID" property="bid" jdbcType="DECIMAL" />
+    <result column="PBID" property="pbid" jdbcType="DECIMAL" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="DEX" property="dex" jdbcType="DECIMAL" />
+    <result column="DES" property="des" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from BASE
+    where BID = #{bid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Base" useGeneratedKeys="true" keyProperty="bid" >
+    insert into BASE (PBID, CODE, NAME,
+      DEX, DES)
+    values (#{pbid,jdbcType=DECIMAL}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{dex,jdbcType=DECIMAL}, #{des,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Base" >
+    update BASE
+    set PBID = #{pbid,jdbcType=DECIMAL},
+      CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      DEX = #{dex,jdbcType=DECIMAL},
+      DES = #{des,jdbcType=VARCHAR}
+    where BID = #{bid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select BID, PBID, CODE, NAME, DEX, DES
+    from BASE
+    where BID = #{bid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select BID, PBID, CODE, NAME, DEX, DES
+    from BASE
+  </select>
+  <select id="selectByPbid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select BID, PBID, CODE, NAME, DEX, DES
+    from BASE
+    where PBID=#{pbid}
+  </select>
+</mapper>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>杭州市环境保护局生态文明工程管理系统</title>
+    <link rel="stylesheet" href="../static/css/title.css">
+</head>
+<style type="text/css">
+
+</style>
+<body >
+<div id=d0 border=1>
+    <div id="top" scroll="no">
+        <img id="m" align="center" src="../static/img/top.jpg" >
+    </div>
+    <div id=d2  border=1>
+        <iframe id=i1 src="./loger.html" th:replace="loger::html"></iframe>
+    </div>
+    <div id=d3  border=1>
+        <div id=d4>
+            <iframe id=i2  th:replace="./menu::html"></iframe>
+        </div>
+        <div id=d5>
+            <iframe id=i3  th:replace="default::html"></iframe>
+        </div>
+    </div>
+</div>
+</body>
+</html>

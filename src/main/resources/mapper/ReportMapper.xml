@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.ReportMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Report" >
+    <id column="RID" property="rid" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="AID" property="aid" jdbcType="DECIMAL" />
+    <result column="DID" property="did" jdbcType="DECIMAL" />
+    <result column="WID" property="wid" jdbcType="DECIMAL" />
+    <result column="TID" property="tid" jdbcType="DECIMAL" />
+    <result column="RETIM" property="retim" jdbcType="DATE" />
+    <result column="DES" property="des" jdbcType="VARCHAR" />
+    <result column="REA" property="rea" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="DECIMAL" />
+    <result column="NUM" property="num" jdbcType="DECIMAL" />
+    <result column="FINTIM" property="fintim" jdbcType="DATE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from REPORT
+    where RID = #{rid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Report" useGeneratedKeys="true" keyProperty="rid" >
+    insert into REPORT (PID, AID, DID,
+      WID, TID, RETIM, DES, 
+      REA, STATE, NUM, FINTIM
+      )
+    values (#{pid,jdbcType=DECIMAL}, #{aid,jdbcType=DECIMAL}, #{did,jdbcType=DECIMAL}, 
+      #{wid,jdbcType=DECIMAL}, #{tid,jdbcType=DECIMAL}, #{retim,jdbcType=DATE}, #{des,jdbcType=VARCHAR}, 
+      #{rea,jdbcType=VARCHAR}, #{state,jdbcType=DECIMAL}, #{num,jdbcType=DECIMAL}, #{fintim,jdbcType=DATE}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Report" >
+    update REPORT
+    set PID = #{pid,jdbcType=DECIMAL},
+      AID = #{aid,jdbcType=DECIMAL},
+      DID = #{did,jdbcType=DECIMAL},
+      WID = #{wid,jdbcType=DECIMAL},
+      TID = #{tid,jdbcType=DECIMAL},
+      RETIM = #{retim,jdbcType=DATE},
+      DES = #{des,jdbcType=VARCHAR},
+      REA = #{rea,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL},
+      NUM = #{num,jdbcType=DECIMAL},
+      FINTIM = #{fintim,jdbcType=DATE}
+    where RID = #{rid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select RID, PID, AID, DID, WID, TID, RETIM, DES, REA, STATE, NUM, FINTIM
+    from REPORT
+    where RID = #{rid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select RID, PID, AID, DID, WID, TID, RETIM, DES, REA, STATE, NUM, FINTIM
+    from REPORT
+  </select>
+</mapper>

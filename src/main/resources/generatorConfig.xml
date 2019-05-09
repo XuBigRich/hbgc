@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+         <!DOCTYPE generatorConfiguration
+           PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="Orcal"  targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <!--自动识别数据库关键字-->
+        <property name="autoDelimitKeywords" value="false" />
+        <!--生成的java文件编码-->
+        <property name="javaFileEncoding" value="utf-8"/>
+        <!--用于标记数据库对象名的符号-->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <!--注释生成器-->
+        <commentGenerator>
+            <property name="suppressDta" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!-- 必须要有的，使用这个配置链接数据库 @TODO:是否可以扩展 -->
+        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+             connectionURL="jdbc:oracle:thin:@localhost:1521:orcl" userId="sa" password="sa">
+            <!-- 这里面可以设置property属性，每一个property属性都设置到配置的Driver上 -->
+        </jdbcConnection>
+        <!-- java模型创建器，是必须要的元素 负责：1，key类（见context的defaultModelType）；2，java类；3，查询类
+                 targetPackage：生成的类要放的包，真实的包受enableSubPackages属性控制；
+                 targetProject：文件夹地址，如果文件夹目录不存在，MBG不会自动建目录 -->
+        <javaModelGenerator targetPackage="top.piao888.hbgc.domain" targetProject="./src/main/java">
+            <!-- for MyBatis3/MyBatis3Simple 自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setter； -->
+            <property name="constructorBased" value="false" />
+            <!-- for MyBatis3 / MyBatis3Simple 是否创建一个不可变的类，如果为true， 那么MBG会创建一个没有setter方法的类，取而代之的是类似constructorBased的类 -->
+            <property name="immutable" value="false" />
+        </javaModelGenerator>
+        <!-- 生成SQL map的XML文件生成器， 注意，在Mybatis3之后，我们可以使用mapper.xml文件+Mapper接口（或者不用mapper接口），
+             或者只使用Mapper接口+Annotation，所以，如果 javaClientGenerator配置中配置了需要生成XML的话，这个元素就必须配置
+             targetPackage/targetProject:同javaModelGenerator -->
+       <sqlMapGenerator targetPackage="mapper" targetProject="./src/main/resources">
+           <property name="enableSubPackages" value="true"/>
+       </sqlMapGenerator>
+        <!-- 对于mybatis来说，即生成Mapper接口，注意，如果没有配置该元素，那么默认不会生成Mapper接口 targetPackage/targetProject:同javaModelGenerator
+             type：选择怎么生成mapper接口（在MyBatis3/MyBatis3Simple下）：
+             1，ANNOTATEDMAPPER：会生成使用Mapper接口+Annotation的方式创建（SQL生成在annotation中），不会生成对应的XML；
+             2，MIXEDMAPPER：使用混合配置，会生成Mapper接口，并适当添加合适的Annotation，但是XML会生成在XML中；
+             3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
+             注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="top.piao888.hbgc.mapper" targetProject="./src/main/java">
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 可以为所有生成的接口添加一个父接口，但是MBG只负责生成，不负责检查 <property name="rootInterface"
+                 value=""/> -->
+            <property name="methodNameCalculator" value="extended"/>
+        </javaClientGenerator>
+
+
+        <table tableName="BASE" delimitIdentifiers="true">
+                     <!-- 参考 javaModelGenerator 的 constructorBased属性 -->
+                     <property name="constructorBased" value="false" />
+                    <!-- 主键 -->
+                    <generatedKey column="BID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="DEPT" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="DID " sqlStatement="JDBC"/>
+        </table>
+        <table tableName="ACCS" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="AID " sqlStatement="JDBC"/>
+        </table>
+        <table tableName="ROLES" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="RID" sqlStatement="JDBC"/>
+        </table>
+       <!-- <table tableName="roles_funs" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+        </table>-->
+        <table tableName="FUNS" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="FID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="SENA" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="SID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="PROJECT" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="PID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="PROJECTFILE" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="PFID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="MONEY" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+        </table>
+        <table tableName="APPLY" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+        </table>
+        <table tableName="STEP" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+        </table>
+        <table tableName="STEPFILE" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="SFID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="REPORT" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="RID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="REPORTFILE" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="RFID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="ITEM" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="IID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="ITEMFILE" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="IFID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="WATER" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="WID" sqlStatement="JDBC"/>
+        </table>
+        <table tableName="ACCEPT" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+        </table>
+        <table tableName="ACCEPTFILE" delimitIdentifiers="true">
+            <property name="constructorBased" value="false" />
+            <generatedKey column="AFID" sqlStatement="JDBC"/>
+        </table>
+    </context>
+</generatorConfiguration>

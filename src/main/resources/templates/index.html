@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>用户登陆</title>
+	<!--<link type="text/css" rel="stylesheet" href="../static/css/common.css">-->
+
+	<link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link type="text/css" rel="stylesheet" href="../static/css/xhz.css">
+</head>
+<!--<script language="javascript" src="../static/js/time.js" charset="gbk"></script>-->
+<script type="text/javascript" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script language="javascript" src="../static/js/vue.js"></script>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script language="javascript" src="../static/js/bootstrap.js"></script>
+<body backgroud="../static/img/bg.jpg">
+		<div class="topPhoto">
+			<img src="../static/img/logo.jpg">
+		</div>
+
+		<div id="loginForm">
+			<form  action="/login" method=post onsubmit="return test();">
+				<div class="form-group">
+				<label class=" control-label">用户名：</label>
+					<div ><input v-model="username" id="a" class="form-control" name="username"></div>
+
+				</div>
+				<div class="form-group">
+					<label class="control-label">密&nbsp;&nbsp;码:</label>
+					<div>
+						<input v-model="password" class="form-control" id="b" type="password" name="password">
+					</div>
+				</div>
+				<div>
+					<!--<input class="col-sm-6 btn btn-info" v-on:click="beforesenaReg" type=button value="申报账号注册" data-toggle="modal" data-target="#signInModal">-->
+					<!--<input class="col-sm-6 btn btn-primary" type="submit" value="登  陆">-->
+                    <button type="button" class="col-sm-6 btn btn-info"  @click="beforesenaReg" data-toggle="modal" data-target="#signInModal">申报账号注册</button>
+                    <button type="submit" class="col-sm-6 btn btn-primary" >登&nbsp;&nbsp;录</button>
+				</div>
+			</form>
+		</div>
+
+	<div class="modal fade " id="signInModal" tabindex="-1" role="dialog" aria-labelledby=""myModalLabel aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal" arjia-label="Close"><span aria-hidden="true">x</span></button>
+					<h4 class="modal-title">注册</h4>
+				</div>
+			<form id="senaRegForm" action="senaReg" method="post" onsubmit="return test();">
+				<div class="modal-body">
+					<div class="form-inline">
+						<div class="form-group">
+							<label>单位名称<span>*</span></label>
+							<input class="form-control" v-model="unit" type=text name="unit">
+						</div>
+						<div class="form-group">
+							<label>联系方式(手机)<span>*</span></label>
+							<input class="form-control" v-model="mob" type=text name="mob" id="mob" @onblur="checkMob">
+						</div>
+					</div>
+					<div class="form-inline">
+						<div class="form-group">
+							<label>机构码<span>*</span></label>
+							<input class="form-control" v-model="code" type=text name="code">
+						</div>
+						<div class="form-group">
+							<label>职务</label>
+							<input class="form-control" v-model="job" type=text name="job">
+						</div>
+					</div>
+
+
+
+
+					<div class="form-inline">
+						<div class="form-group">
+							<label>法人代表<span>*</span></label>
+							<input class="form-control" v-model="fade" type=text name="fade">
+						</div>
+						<div class="form-group">
+							<label>固定电话<span>*</span></label>
+							<input class="form-control" v-model="tel" type=text name="tel">
+						</div>
+					</div>
+
+					<div class="form-inline">
+						<div class="form-group">
+							<label>地址<span>*</span></label>
+							<input class="form-control" v-model="ress"  type=text name="ress">
+						</div>
+						<div class="form-group">
+							<label>电子邮箱：<span>*</span></label>
+							<input class="form-control" v-model="em"  type=text name="em" id="em" @onblur="checkEm">
+						</div>
+					</div>
+
+					<div class="form-inline">
+						<div class="form-group">
+							<label>所属区划<span>*</span></label>
+							<select class="form-control " v-model="bid" name="bid" >
+                                <option  v-for = "(item,key,index) in qy" :value="index" >{{key}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>账号：<span>*</span></label>
+							<input class="form-control" v-model="username"  type=text name="username">
+						</div>
+					</div>
+
+					<div class="form-inline">
+						<div class="form-group">
+							<label>联系人<span>*</span></label>
+							<input class="form-control" v-model="tact"  type=text name="tact">
+						</div>
+						<div class="form-group">
+							<label>密码：<span>*</span></label>
+							<input class="form-control" v-model="password"  type=password name="password">
+						</div>
+					</div>
+
+					<div class="form-inline">
+						<div class="form-group">
+							<label>备注：</label>
+							<textarea id="des" class="form-control " v-model="des" cols="60" rows="6" name="des"></textarea>
+						</div>
+
+					</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type=button class="btn btn-sm btn-danger" data-dismiss="modal">关闭</button>
+				<button class="btn btn-sm btn-primary" @click="checkIsNull" type="button" >注册</button>
+			</div>
+			</form>
+		</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+    function test(){
+        if($('#a').val()==""||$('#b').val()==""){
+            alert("用户名或密码不能空");
+            return false;
+        }
+        return true;
+    }
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    Vue.prototype.$axios = axios;
+    var zc=new Vue({
+        el:"#loginForm",
+        data:{
+            username:'',
+            password:''
+        },
+        methods:{
+            beforesenaReg:function(){
+                this.$axios.get("/beforesenaReg").then(function(response){
+                    console.log(response.data.object);
+                    senaRegForm.qy=response.data.object;
+                });
+            },
+            checklogin:function(){
+                if(this.username==""||this.password=="") {
+                    alert("用户名或密码不能空");
+                }
+
+            }
+        }
+    });
+    var senaRegForm=new Vue({
+        el:'#senaRegForm',
+        data:{
+            qy:'',
+            unit:'',
+            mob:'',
+            code:'',
+            job:'',
+            fade:'',
+            tel:'',
+            ress:'',
+            em:'',
+            bid:'',
+            username:'',
+            tact:'',
+            password:'',
+            des:''
+        },
+        methods:{
+            checkMob:function(){
+                var q3=/^[a-zA-Z0-9_]{3,}@[a-zA-Z0-9]+.[a-z]{3}$/
+                if(!q3.test(this.em)){
+                    this.em.style.borderColor="red";
+                    this.em="";
+                }
+                else{this.em.style.borderColor="black";}
+            },
+            checkEm:function(){
+                function checkMob(){
+                    var q4=/^1\d{10}$/
+                    if(!q4.test(this.mob)){
+                        this.mob.style.borderColor="red";
+                        this.mob="";
+                    }
+                    else{mob.style.borderColor="black";}
+                }
+            },
+            checkIsNull:function(){
+                if(this.unit==''||
+                    this.mob==''||
+                    this.code==''||
+                    this.job==''||
+                    this.fade==''||
+                    this.tel==''||
+                    this.ress==''||
+                    this.em==''||
+                    this.bid==''||
+                    this.username==''||
+                    this.tact==''||
+                    this.password==''||
+                    this.des==''){
+                    alert("请填写完整");
+                    return false;
+                }
+                 let formData = new FormData();
+                formData.append('qy', this.qy);
+                formData.append('unit', this.unit);
+                formData.append('mob', this.mob);
+                formData.append('code', this.code);
+                formData.append('job', this.job);
+                formData.append('fade', this.fade);
+                formData.append('tel', this.tel);
+                formData.append('ress', this.ress);
+                formData.append('em', this.em);
+                formData.append('bid', this.bid);
+                formData.append('username', this.username);
+                formData.append('tact', this.tact);
+                formData.append('password', this.password);
+                formData.append('des', this.des);
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+                axios.post('/senaReg', formData, config).then(function (res) {
+                    if (res.status === 200) {
+                        alert("提交成功！");
+                    }else {
+                        alert("提交失败！");
+                    }
+                })
+                return true;
+            },
+        }
+    });
+</script>
+</html>

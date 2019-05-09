@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.FunssMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Funss" >
+    <id column="FID" property="fid" jdbcType="DECIMAL" />
+    <result column="PFID" property="pfid" jdbcType="DECIMAL" />
+    <result column="URI" property="uri" jdbcType="VARCHAR" />
+    <result column="DES" property="des" jdbcType="VARCHAR" />
+  <!--  <association property="childFunss" column="PFID" select="selectChildFunss" javaType="java.util.List"/>-->
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from FUNSS
+    where FID = #{fid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Funss" useGeneratedKeys="true" keyProperty="fid" >
+    insert into FUNSS (PFID, URI, DES
+      )
+    values (#{pfid,jdbcType=DECIMAL}, #{uri,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Funss" >
+    update FUNSS
+    set PFID = #{pfid,jdbcType=DECIMAL},
+      URI = #{uri,jdbcType=VARCHAR},
+      DES = #{des,jdbcType=VARCHAR}
+    where FID = #{fid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select FID, PFID, URI, DES
+    from FUNSS
+    where FID = #{fid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select FID, PFID, URI, DES
+    from FUNSS
+  </select>
+  <select id="selectMenu" resultMap="BaseResultMap">
+    select * from FUNSS WHERE PFID=0
+  </select>
+<!--  <select id="selectChildFunss" resultType="top.piao888.hbgc.domain.Funss" parameterType="java.lang.Long">
+    SELECT FID, PFID, URI, DES FROM FUNSS WHERE PFID=#{pid}
+  </select>-->
+
+</mapper>

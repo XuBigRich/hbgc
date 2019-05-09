@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.ItemMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Item" >
+    <id column="IID" property="iid" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="WID" property="wid" jdbcType="DECIMAL" />
+    <result column="TACT" property="tact" jdbcType="VARCHAR" />
+    <result column="DIST" property="dist" jdbcType="VARCHAR" />
+    <result column="DNAME" property="dname" jdbcType="VARCHAR" />
+    <result column="TIM" property="tim" jdbcType="DATE" />
+    <result column="TXT" property="txt" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ITEM
+    where IID = #{iid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Item" useGeneratedKeys="true" keyProperty="iid" >
+    insert into ITEM (PID, WID, TACT,
+      DIST, DNAME, TIM, TXT
+      )
+    values (#{pid,jdbcType=DECIMAL}, #{wid,jdbcType=DECIMAL}, #{tact,jdbcType=VARCHAR}, 
+      #{dist,jdbcType=VARCHAR}, #{dname,jdbcType=VARCHAR}, #{tim,jdbcType=DATE}, #{txt,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Item" >
+    update ITEM
+    set PID = #{pid,jdbcType=DECIMAL},
+      WID = #{wid,jdbcType=DECIMAL},
+      TACT = #{tact,jdbcType=VARCHAR},
+      DIST = #{dist,jdbcType=VARCHAR},
+      DNAME = #{dname,jdbcType=VARCHAR},
+      TIM = #{tim,jdbcType=DATE},
+      TXT = #{txt,jdbcType=VARCHAR}
+    where IID = #{iid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select IID, PID, WID, TACT, DIST, DNAME, TIM, TXT
+    from ITEM
+    where IID = #{iid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select IID, PID, WID, TACT, DIST, DNAME, TIM, TXT
+    from ITEM
+  </select>
+</mapper>

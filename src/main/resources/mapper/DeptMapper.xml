@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.DeptMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Dept" >
+    <id column="DID" property="did" jdbcType="DECIMAL" />
+    <result column="PDID" property="pdid" jdbcType="DECIMAL" />
+    <result column="TID" property="tid" jdbcType="DECIMAL" />
+    <result column="BID" property="bid" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="RESS" property="ress" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="TACT" property="tact" jdbcType="VARCHAR" />
+    <result column="MOB" property="mob" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from DEPT
+    where DID = #{did,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Dept" >
+    insert into DEPT (DID, PDID, TID,
+      BID, NAME, RESS, TEL, 
+      TACT, MOB)
+    values (#{did,jdbcType=DECIMAL}, #{pdid,jdbcType=DECIMAL}, #{tid,jdbcType=DECIMAL}, 
+      #{bid,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{ress,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{tact,jdbcType=VARCHAR}, #{mob,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Dept" >
+    update DEPT
+    set PDID = #{pdid,jdbcType=DECIMAL},
+      TID = #{tid,jdbcType=DECIMAL},
+      BID = #{bid,jdbcType=DECIMAL},
+      NAME = #{name,jdbcType=VARCHAR},
+      RESS = #{ress,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      TACT = #{tact,jdbcType=VARCHAR},
+      MOB = #{mob,jdbcType=VARCHAR}
+    where DID = #{did,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select DID, PDID, TID, BID, NAME, RESS, TEL, TACT, MOB
+    from DEPT
+    where DID = #{did,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select DID, PDID, TID, BID, NAME, RESS, TEL, TACT, MOB
+    from DEPT
+  </select>
+</mapper>

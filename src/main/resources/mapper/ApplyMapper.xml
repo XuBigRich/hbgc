@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.ApplyMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Apply" >
+    <id column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="AAID" property="aaid" jdbcType="DECIMAL" />
+    <result column="DID" property="did" jdbcType="DECIMAL" />
+    <result column="LASTID" property="lastid" jdbcType="DECIMAL" />
+    <result column="CURDID" property="curdid" jdbcType="DECIMAL" />
+    <result column="WID" property="wid" jdbcType="DECIMAL" />
+    <result column="TIM" property="tim" jdbcType="DATE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from APPLY
+    where PID = #{pid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Apply" >
+    insert into APPLY (PID, AAID, DID,
+      LASTID, CURDID, WID, 
+      TIM)
+    values (#{pid,jdbcType=DECIMAL}, #{aaid,jdbcType=DECIMAL}, #{did,jdbcType=DECIMAL}, 
+      #{lastid,jdbcType=DECIMAL}, #{curdid,jdbcType=DECIMAL}, #{wid,jdbcType=DECIMAL}, 
+      #{tim,jdbcType=DATE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Apply" >
+    update APPLY
+    set AAID = #{aaid,jdbcType=DECIMAL},
+      DID = #{did,jdbcType=DECIMAL},
+      LASTID = #{lastid,jdbcType=DECIMAL},
+      CURDID = #{curdid,jdbcType=DECIMAL},
+      WID = #{wid,jdbcType=DECIMAL},
+      TIM = #{tim,jdbcType=DATE}
+    where PID = #{pid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select PID, AAID, DID, LASTID, CURDID, WID, TIM
+    from APPLY
+    where PID = #{pid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PID, AAID, DID, LASTID, CURDID, WID, TIM
+    from APPLY
+  </select>
+</mapper>

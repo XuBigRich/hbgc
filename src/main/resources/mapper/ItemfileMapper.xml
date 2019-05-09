@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.ItemfileMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Itemfile" >
+    <id column="IFID" property="ifid" jdbcType="DECIMAL" />
+    <result column="IID" property="iid" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="FN" property="fn" jdbcType="VARCHAR" />
+    <result column="TP" property="tp" jdbcType="VARCHAR" />
+    <result column="SIZ" property="siz" jdbcType="DECIMAL" />
+    <result column="TIM" property="tim" jdbcType="DATE" />
+    <result column="TXT" property="txt" jdbcType="BLOB" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ITEMFILE
+    where IFID = #{ifid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Itemfile" useGeneratedKeys="true" keyProperty="ifid" >
+    insert into ITEMFILE (IID, PID, FN,
+      TP, SIZ, TIM, TXT
+      )
+    values (#{iid,jdbcType=DECIMAL}, #{pid,jdbcType=DECIMAL}, #{fn,jdbcType=VARCHAR}, 
+      #{tp,jdbcType=VARCHAR}, #{siz,jdbcType=DECIMAL}, #{tim,jdbcType=DATE}, #{txt,jdbcType=BLOB}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Itemfile" >
+    update ITEMFILE
+    set IID = #{iid,jdbcType=DECIMAL},
+      PID = #{pid,jdbcType=DECIMAL},
+      FN = #{fn,jdbcType=VARCHAR},
+      TP = #{tp,jdbcType=VARCHAR},
+      SIZ = #{siz,jdbcType=DECIMAL},
+      TIM = #{tim,jdbcType=DATE},
+      TXT = #{txt,jdbcType=BLOB}
+    where IFID = #{ifid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select IFID, IID, PID, FN, TP, SIZ, TIM, TXT
+    from ITEMFILE
+    where IFID = #{ifid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select IFID, IID, PID, FN, TP, SIZ, TIM, TXT
+    from ITEMFILE
+  </select>
+</mapper>

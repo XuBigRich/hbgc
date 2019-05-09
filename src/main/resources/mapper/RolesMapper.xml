@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.RolesMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Roles" >
+    <id column="RID" property="rid" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="DES" property="des" jdbcType="VARCHAR" />
+    <collection property="funss" ofType="top.piao888.hbgc.domain.Funss">
+      <id column="FID" property="fid" jdbcType="DECIMAL" />
+      <result column="PFID" property="pfid" jdbcType="DECIMAL" />
+      <result column="URI" property="uri" jdbcType="VARCHAR" />
+      <result column="DES" property="des" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ROLES
+    where RID = #{rid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Roles" useGeneratedKeys="true" keyProperty="rid" >
+    insert into ROLES (NAME, DES)
+    values (#{name,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Roles" >
+    update ROLES
+    set NAME = #{name,jdbcType=VARCHAR},
+      DES = #{des,jdbcType=VARCHAR}
+    where RID = #{rid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select RID, NAME, DES
+    from ROLES
+    where RID = #{rid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select RID, NAME, DES
+    from ROLES
+  </select>
+  <select id="selectFunsByRid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select F.FID, F.PFID, F.URI, F.DES, R.RID, R.NAME, R.DES
+    FROM ROLES R,ROLES_FUNS RF,FUNSS F
+    WHERE R.RID=RF.RID AND F.FID=RF.FID AND R.RID=#{rid}
+  </select>
+
+</mapper>

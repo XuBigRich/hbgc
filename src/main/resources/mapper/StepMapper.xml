@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.StepMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Step" >
+    <id column="SID" property="sid" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="BID" property="bid" jdbcType="DECIMAL" />
+    <result column="AID" property="aid" jdbcType="DECIMAL" />
+    <result column="DID" property="did" jdbcType="DECIMAL" />
+    <result column="NID" property="nid" jdbcType="DECIMAL" />
+    <result column="TIM" property="tim" jdbcType="DATE" />
+    <result column="TXT" property="txt" jdbcType="VARCHAR" />
+    <result column="TID" property="tid" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from STEP
+    where SID = #{sid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Step" >
+    insert into STEP (SID, PID, BID,
+      AID, DID, NID, TIM, 
+      TXT, TID)
+    values (#{sid,jdbcType=DECIMAL}, #{pid,jdbcType=DECIMAL}, #{bid,jdbcType=DECIMAL}, 
+      #{aid,jdbcType=DECIMAL}, #{did,jdbcType=DECIMAL}, #{nid,jdbcType=DECIMAL}, #{tim,jdbcType=DATE}, 
+      #{txt,jdbcType=VARCHAR}, #{tid,jdbcType=DECIMAL})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Step" >
+    update STEP
+    set PID = #{pid,jdbcType=DECIMAL},
+      BID = #{bid,jdbcType=DECIMAL},
+      AID = #{aid,jdbcType=DECIMAL},
+      DID = #{did,jdbcType=DECIMAL},
+      NID = #{nid,jdbcType=DECIMAL},
+      TIM = #{tim,jdbcType=DATE},
+      TXT = #{txt,jdbcType=VARCHAR},
+      TID = #{tid,jdbcType=DECIMAL}
+    where SID = #{sid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select SID, PID, BID, AID, DID, NID, TIM, TXT, TID
+    from STEP
+    where SID = #{sid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SID, PID, BID, AID, DID, NID, TIM, TXT, TID
+    from STEP
+  </select>
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.AccsMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Accs" >
+    <id column="AID" property="aid" jdbcType="DECIMAL" />
+    <result column="DID" property="did" jdbcType="DECIMAL" />
+    <result column="RID" property="rid" jdbcType="DECIMAL" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="STAT" property="stat" jdbcType="DECIMAL" />
+    <result column="JOB" property="job" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="EM" property="em" jdbcType="VARCHAR" />
+    <result column="DES" property="des" jdbcType="VARCHAR" />
+   <!-- <association   property="dept"  javaType="top.piao888.hbgc.domain.Dept">
+      <id column="DID" property="did" jdbcType="DECIMAL" />
+      <result column="PDID" property="pdid" jdbcType="DECIMAL" />
+      <result column="TID" property="tid" jdbcType="DECIMAL" />
+      <result column="BID" property="bid" jdbcType="DECIMAL" />
+      <result column="NAME" property="name" jdbcType="VARCHAR" />
+      <result column="RESS" property="ress" jdbcType="VARCHAR" />
+      <result column="TEL" property="tel" jdbcType="VARCHAR" />
+      <result column="TACT" property="tact" jdbcType="VARCHAR" />
+      <result column="MOB" property="mob" jdbcType="VARCHAR" />
+    </association>-->
+  <!--  <association  property="roles" javaType="top.piao888.hbgc.domain.Roles">
+      <id column="RID" property="rid" jdbcType="DECIMAL" />
+      <result column="NAME" property="rname" jdbcType="VARCHAR" />
+      <result column="DES" property="rdes" jdbcType="VARCHAR" />
+    </association>-->
+    <association   property="dept" select="selectDept"  column="DID" javaType="top.piao888.hbgc.domain.Dept"/>
+    <association  property="roles"  select="selectRoles" column="RID" javaType="top.piao888.hbgc.domain.Roles">
+    </association>
+  </resultMap>
+  <sql id="all">
+    a.AID, a.DID, a.RID, a.USERNAME, a.PASSWORD, a.SEX, a.TEL, a.STAT, a.JOB, a.NAME, a.EM, a.DES,d.DID, d.PDID,d.TID,d.BID,d.NAME,d.RESS,d.TEL,d.TACT,d.MOB,R.RID,R.NAME,R.DES
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ACCS
+    where AID = #{aid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Accs" >
+    insert into `ACCS` (AID, DID, RID, 
+      USERNAME, PASSWORD, SEX, 
+      TEL, STAT, JOB, NAME, 
+      EM, DES)
+    values (#{aid,jdbcType=DECIMAL}, #{did,jdbcType=DECIMAL}, #{rid,jdbcType=DECIMAL}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{stat,jdbcType=DECIMAL}, #{job,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{em,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Accs" >
+    update ACCS
+    set DID = #{did,jdbcType=DECIMAL},
+      RID = #{rid,jdbcType=DECIMAL},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      STAT = #{stat,jdbcType=DECIMAL},
+      JOB = #{job,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      EM = #{em,jdbcType=VARCHAR},
+      DES = #{des,jdbcType=VARCHAR}
+    where AID = #{aid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select AID, DID, RID, USERNAME, PASSWORD, SEX, TEL, STAT, JOB, NAME, EM, DES
+    from ACCS
+    where AID = #{aid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select AID, DID, RID, USERNAME, PASSWORD, SEX, TEL, STAT, JOB, NAME, EM, DES
+    from ACCS
+  </select>
+ <!-- <select id="login" resultMap="BaseResultMap" parameterType="top.piao888.hbgc.domain.Accs">
+    select <include refid="all"/>
+      from ACCS a,DEPT d,ROLES r
+      where a.USERNAME=#{username} AND a.PASSWORD=#{password} AND a.DID=d.DID AND a.RID=r.RID
+  </select>-->
+
+<!--  <select id="login" resultMap="BaseResultMap" parameterType="top.piao888.hbgc.domain.Accs">
+    select *
+    from ACCS a,DEPT d
+    where a.USERNAME=#{username} AND a.PASSWORD=#{password} AND a.DID=d.DID
+  </select>-->
+
+  <select id="login" resultMap="BaseResultMap" parameterType="top.piao888.hbgc.domain.Accs">
+    select *
+    from ACCS a
+    where a.USERNAME=#{username} AND a.PASSWORD=#{password}
+  </select>
+  <select id="selectRoles" resultType="top.piao888.hbgc.domain.Roles" parameterType="java.lang.Long">
+    select *
+    from ROLES
+    where RID=#{rid}
+  </select>
+  <select id="selectDept" resultType="top.piao888.hbgc.domain.Dept" parameterType="java.lang.Long">
+    select *
+    from DEPT
+    where DID=#{did}
+  </select>
+</mapper>
