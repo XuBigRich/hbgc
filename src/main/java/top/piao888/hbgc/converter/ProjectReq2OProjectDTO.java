@@ -28,7 +28,9 @@ public class ProjectReq2OProjectDTO {
         ProjectDTO.setTotal(countTotal);
         //设置上传文件
         MultipartFile[] files= ProjectReq.getFiles();
-        ProjectDTO.setProjectfiles(CreateProDTO20ProjectFile.convert(files));
+        if(files!=null) {
+            ProjectDTO.setProjectfiles(CreateProDTO20ProjectFile.convert(files));
+        }
         return ProjectDTO;
     }
     public  static Long countTotal(Long cou,Long pro,Long city,Long dist,Long com){

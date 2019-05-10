@@ -59,14 +59,10 @@
       FDID = #{fdid,jdbcType=DECIMAL},
       CDID = #{cdid,jdbcType=DECIMAL},
       BID = #{bid,jdbcType=DECIMAL},
-      VID = #{vid,jdbcType=DECIMAL},
-      SID = #{sid,jdbcType=DECIMAL},
-      AID = #{aid,jdbcType=DECIMAL},
       STAT = #{stat,jdbcType=DECIMAL},
       KID = #{kid,jdbcType=DECIMAL},
       MARY = #{mary,jdbcType=VARCHAR},
       NAME = #{name,jdbcType=VARCHAR},
-      PNO = #{pno,jdbcType=VARCHAR},
       YEAR = #{year,jdbcType=VARCHAR},
       RESS = #{ress,jdbcType=VARCHAR},
       LAT = #{lat,jdbcType=VARCHAR},
@@ -79,6 +75,20 @@
       HEAD = #{head,jdbcType=VARCHAR},
       MOB = #{mob,jdbcType=VARCHAR},
       DES = #{des,jdbcType=VARCHAR}
+    <trim prefix="," suffixOverrides=",">
+      <if test="pno!=null and pno!=''">
+        PNO = #{pno,jdbcType=VARCHAR}
+      </if>
+      <if test="vid!=null and vid!=''">
+        VID = #{vid,jdbcType=DECIMAL}
+      </if>
+      <if test="sid!=null and sid!=''">
+        SID = #{sid,jdbcType=DECIMAL}
+      </if>
+      <if test="aid!=null and aid!=''">
+        AID = #{aid,jdbcType=DECIMAL}
+      </if>
+    </trim>
     where PID = #{pid,jdbcType=DECIMAL}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

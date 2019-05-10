@@ -18,15 +18,18 @@ import java.util.Calendar;
  */
 public class ProjectRes2OProjectDTO {
     public static ProjectDTO convert(ProjectRes projectRes){
-    ProjectDTO ProjectDTO=new ProjectDTO();
-    BeanUtils.copyProperties(projectRes,ProjectDTO);
+    ProjectDTO projectDTO=new ProjectDTO();
+    BeanUtils.copyProperties(projectRes,projectDTO);
     //计算项目总投资金额
     Long countTotal=countTotal(projectRes.getCou(),projectRes.getPro(),projectRes.getCity(),projectRes.getDist(),projectRes.getCom());
-    ProjectDTO.setTotal(countTotal);
+        projectDTO.setTotal(countTotal);
+    projectDTO.setYear(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
     //设置上传文件
     MultipartFile[] files= projectRes.getFiles();
-    ProjectDTO.setProjectfiles(CreateProDTO20ProjectFile.convert(files));
-    return ProjectDTO;
+    if(files!=null) {
+        projectDTO.setProjectfiles(CreateProDTO20ProjectFile.convert(files));
+    }
+    return projectDTO;
 }
     public  static Long countTotal(Long cou,Long pro,Long city,Long dist,Long com){
         return cou+pro+city+dist+com;

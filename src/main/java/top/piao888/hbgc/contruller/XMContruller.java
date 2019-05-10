@@ -41,12 +41,15 @@ public class XMContruller {
     /*创建区级项目前*/
     @GetMapping("beforecreatecity")
     public ResponseVo beforecreatecity(ProjectReq ProjectReq){
-
+        ProjectReq.setVid(61L);
+        ProjectDTO ProjectDTO =  ProjectReq2OProjectDTO.convert(ProjectReq);
+        xiangmuService.createProject(ProjectDTO);
         return new ResponseVo();
     }
     /*创建市级项目*/
     @PostMapping("createcity")
     public ResponseVo createProject(ProjectReq ProjectReq){
+        ProjectReq.setVid(62L);
         ProjectDTO ProjectDTO =  ProjectReq2OProjectDTO.convert(ProjectReq);
         xiangmuService.createProject(ProjectDTO);
         return new ResponseVo();
@@ -76,7 +79,7 @@ public class XMContruller {
         return ResultVoUtil.success(projectRes);
     }
     /*项目修改*/
-    @GetMapping("updateproject")
+    @PostMapping("updateproject")
     public ResponseVo UpdateProject(ProjectRes projectRes){
         ProjectDTO projectDTO=ProjectRes2OProjectDTO.convert(projectRes);
         xiangmuService.updateProject(projectDTO);

@@ -85,9 +85,11 @@ public class XiangmuService {
         BeanUtils.copyProperties(ProjectDTO,money);
         moneyMapper.insert(money);
         projectfiles=ProjectDTO.getProjectfiles();
-        projectfiles=projectfiles.stream().peek(e->e.setPid(pid.longValue())).collect(Collectors.toList());
-        for(int i=0;i<projectfiles.size();i++){
-            projectfileMapper.insert(projectfiles.get(i));
+        if(projectfiles!=null){
+            projectfiles=projectfiles.stream().peek(e->e.setPid(pid.longValue())).collect(Collectors.toList());
+            for(int i=0;i<projectfiles.size();i++){
+                projectfileMapper.insert(projectfiles.get(i));
+            }
         }
     }
     public ProjectDTO beforeUpdateProject(Long pid){
@@ -109,9 +111,11 @@ public class XiangmuService {
         BeanUtils.copyProperties(projectDTO,money);
         moneyMapper.updateByPrimaryKey(money);
         projectfiles=projectDTO.getProjectfiles();
-        projectfiles=projectfiles.stream().peek(e->e.setPid(projectDTO.getPid().longValue())).collect(Collectors.toList());
-        for(int i=0;i<projectfiles.size();i++){
-            projectfileMapper.insert(projectfiles.get(i));
+        if(projectfiles!=null) {
+            projectfiles = projectfiles.stream().peek(e -> e.setPid(projectDTO.getPid().longValue())).collect(Collectors.toList());
+            for (int i = 0; i < projectfiles.size(); i++) {
+                projectfileMapper.insert(projectfiles.get(i));
+            }
         }
     }
     public void deleteProjectfile(Long pfid) {
