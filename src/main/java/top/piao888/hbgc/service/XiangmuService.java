@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import top.piao888.hbgc.cache.CacheManager;
+import top.piao888.hbgc.converter.ProjectDTO2OProjectRes;
 import top.piao888.hbgc.domain.Base;
 import top.piao888.hbgc.domain.Money;
 import top.piao888.hbgc.domain.Project;
@@ -18,6 +19,7 @@ import top.piao888.hbgc.mapper.MoneyMapper;
 import top.piao888.hbgc.mapper.ProjectMapper;
 import top.piao888.hbgc.mapper.ProjectfileMapper;
 import top.piao888.hbgc.util.ProjectUtill;
+import top.piao888.hbgc.vo.Project.ProjectRes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,14 +90,31 @@ public class XiangmuService {
             projectfileMapper.insert(projectfiles.get(i));
         }
     }
-    @Transactional(propagation=Propagation.REQUIRED,readOnly = false,isolation = Isolation.DEFAULT)
     public ProjectDTO beforeUpdateProject(Long pid){
         ProjectDTO projectDTO=new ProjectDTO();
         Project project=projectMapper.selectByPrimaryKey(pid);
         Money money= moneyMapper.selectByPrimaryKey(pid);
-        Projectfile projectfile=projectfileMapper.selectByPid(pid);
+        List<Projectfile> projectfiles=projectfileMapper.selectByPid(pid);
         BeanUtils.copyProperties(project,projectDTO);
         BeanUtils.copyProperties(money,projectDTO);
-
+        projectDTO.setProjectfiles(projectfiles);
+       return projectDTO;
+    }
+    public void updateProject(ProjectDTO projectDTO){
+        Project project=new Project();
+        Money money=new Money();
+        List<Projectfile> projectfiles;
+        BeanUtils.copyProperties(projectDTO,project);
+        projectMapper.updateByPrimaryKey(project);
+        BeanUtils.copyProperties(projectDTO,money);
+        moneyMapper.updateByPrimaryKey(money);
+        projectfiles=projectDTO.getProjectfiles();
+        projectfiles=projectfiles.stream().peek(e->e.setPid(projectDTO.getPid().longValue())).collect(Collectors.toList());
+        for(int i=0;i<projectfiles.size();i++){
+            projectfileMapper.insert(projectfiles.get(i));
+        }
+    }
+    public void deleteProjectfile(Long pfid) {
+        projectfileMapper.deleteByPrimaryKey(pfid);
     }
 }

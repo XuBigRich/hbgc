@@ -11,7 +11,7 @@ public interface ProjectfileMapper {
 
     Projectfile selectByPrimaryKey(Long pfid);
 
-    Projectfile selectByPid(Long pid);
+    List<Projectfile> selectByPid(Long pid);
 
     List<Projectfile> selectAll();
 

@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.piao888.hbgc.converter.LXCXForm2OProjectMessageDTO;
 import top.piao888.hbgc.dto.ProjectMessageDTO;
-import top.piao888.hbgc.vo.ProjectUpSelectVo;
+import top.piao888.hbgc.vo.request.ProjectUpSelectVo;
 
 import java.util.List;
 

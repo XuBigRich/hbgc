@@ -12,7 +12,7 @@ import top.piao888.hbgc.enums.ResultEnum;
 import top.piao888.hbgc.exception.HbgcException;
 import top.piao888.hbgc.service.ZhanghaoService;
 import top.piao888.hbgc.util.ResultVoUtil;
-import top.piao888.hbgc.vo.ApplyAccountVo;
+import top.piao888.hbgc.vo.request.ApplyAccountVo;
 import top.piao888.hbgc.vo.ResponseVo;
 
 import javax.servlet.http.HttpServletRequest;

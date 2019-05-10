@@ -3,7 +3,7 @@ package top.piao888.hbgc.converter;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import top.piao888.hbgc.dto.ProjectMessageDTO;
-import top.piao888.hbgc.vo.ProjectUpSelectVo;
+import top.piao888.hbgc.vo.request.ProjectUpSelectVo;
 
 /**
  * @author admin

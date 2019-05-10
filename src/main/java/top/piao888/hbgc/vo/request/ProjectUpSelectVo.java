@@ -1,4 +1,4 @@
-package top.piao888.hbgc.vo;
+package top.piao888.hbgc.vo.request;
 
 import lombok.Data;
 

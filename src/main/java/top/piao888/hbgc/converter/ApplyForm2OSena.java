@@ -3,7 +3,7 @@ package top.piao888.hbgc.converter;
 import org.springframework.beans.BeanUtils;
 import top.piao888.hbgc.constant.SenaConstant;
 import top.piao888.hbgc.domain.Sena;
-import top.piao888.hbgc.vo.ApplyAccountVo;
+import top.piao888.hbgc.vo.request.ApplyAccountVo;
 
 import java.util.Date;
 

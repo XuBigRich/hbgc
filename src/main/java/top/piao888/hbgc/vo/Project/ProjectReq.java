@@ -1,4 +1,4 @@
-package top.piao888.hbgc.vo;
+package top.piao888.hbgc.vo.Project;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,12 +9,12 @@ import java.util.Date;
 /**
  * @author admin
  * @version 1.0.0
- * @ClassName CreateProjectVo.java
+ * @ClassName ProjectReq.java
  * @Description TODO
  * @createTime 2019年05月02日 08:58:00
  */
 @Data
-public class CreateProjectVo {
+public class ProjectReq {
     /*项目类型ID，外键  -- pid 1  bid= 12-23*/
     private Long tid;
     /*所属区县ID，外键  --pid=3   bid=33-45*/
