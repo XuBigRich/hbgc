@@ -1,0 +1,34 @@
+body{
+    font-size:16px;
+    font-weight:300;
+    line-height: 30px;
+    margin:0;
+    padding:0;
+}
+.modal-dialog {
+    width:688px;
+}
+.topPhoto {
+    width:611px;
+    margin:0 auto;
+}
+#loginForm {
+    width:241px;
+    margin:0 auto;
+}
+#loginForm span {
+    font:400 34px/34px "microsoft yahei"
+}
+
+label {
+    width:108px;
+}
+#senaRegForm span{
+    color:#c7254e;
+}
+.form-inline .form-control {
+    width:190px;
+}
+ #des {
+    width:496px;
+}

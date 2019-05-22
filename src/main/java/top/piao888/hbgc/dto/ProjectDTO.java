@@ -82,4 +82,5 @@ public class ProjectDTO {
     private Long dist;
     /*企业配套资金private */
     private Long com;
+
 }

@@ -34,7 +34,7 @@ public class XiangmuServiceTest extends TestCase {
         projectUpSelectVo.setTid(23L);
         projectUpSelectVo.setName("猜");
         ProjectMessageDTO projectMessageDTO=LXCXForm2OProjectMessageDTO.convert(projectUpSelectVo);
-        List<ProjectMessageDTO> projectMessageDTOList=xiangmuService.xmlx(projectMessageDTO);
+        List<ProjectMessageDTO> projectMessageDTOList=xiangmuService.xmcx(projectMessageDTO,null);
         for(ProjectMessageDTO projectMessageDTO1:projectMessageDTOList){
             System.out.println(projectMessageDTO1);
         }

@@ -37,7 +37,7 @@ public class AuthorizeAspect {
         ServletRequestAttributes attributes=(ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         HttpServletRequest request=attributes.getRequest();
         //查询cookie
-        Cookie cookie=CookieUtil.get(request,CookieConstant.TOKEN);
+        Cookie cookie=CookieUtil.get(request);
         if(cookie==null){
             log.warn("【登陆校验】 Cookie中查不到token)");
         }

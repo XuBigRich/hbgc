@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <base target="_self">
+        <link rel="stylesheet" href="../static/css/common.css" type="text/css"></link>
+        <link rel="stylesheet" href="../static/css/xu.css" type="text/css">
+        <title>项目申报单位账号申请</title>
+    </head>
+    <script type="text/javascript" src="../static/js/check.js"></script>
+<body>
+<div>
+    <form action="senaReg" method="post" onsubmit="return test();">
+        <table width=650 style="background-color:#ccccff">
+            <tr>
+                <th class="right">单位名称<span class="red" color="red">*</span>：</th>
+                <th class="left"><input type=text name="unit"></th>
+                <th class="right">联系方式(移动电话)<span class="red" color="red">*</span>：</th>
+                <th class="left"><input type=text name="mob" id="mob" onblur="checkMob();"></th>
+            </tr>
+            <tr>
+                <th class="right">机构码<span class="red" color="red">*</span>：</th>
+                <th class="left"><input type=text name="code"></th>
+                <th class="right">职务<span class="red" color="red">*</span>：</th>
+                <th class="left"><input type=text name="job"></th>
+            </tr>
+            <tr>
+                <th class="right">法人代表<span class="red" color="red">*</span>：</th>
+                <th class="left"><input type=text name="fade"></th>
+                <th class="right">固定电话<span class="red" color="red">*</span>：</th>
+                <th class="left"><input type=text name="tel"></th>
+            </tr>
+            <tr>
+                <th class="right">地址<span class="red" color="red">*</span>：</th>
+                <th class="left"><input type=text name="ress"></th>
+                <th class="right">电子邮箱：</th>
+                <th class="left"><input type=text name="em" id="em" onblur="checkEm();"></th>
+            </tr>
+            <tr>
+                <th class="right">所属区划<span class="red" color="red">*</span>：</th>
+                <th class="left">
+   <span class="selspan">
+     <select name="bid">
+         <option th:each="i:${map}" th:value="${i.value}" th:text="${i.key}"/>
+      </select>
+     </span>
+                </th>
+                <th class="right">账号：</th>
+                <th class="left"><input type=text name="username"></th>
+            </tr>
+            <tr>
+                <th class="right">联系人<span class="red" color="red">*</span>：</th>
+                <th class="left"><input type=text name="tact"></th>
+                <th class="right">密码：</th>
+                <th class="left"><input type=password name="password"></th>
+            </tr>
+            <tr>
+                <th class="right" valign="top">备注：</th>
+                <th class="left" colspan=3><textarea cols="60" rows="6" name="des"></textarea></th>
+            </tr>
+            <tr>
+                <th colspan=4 align="center">
+                    <input type=submit value=" 注册 ">&nbsp;&nbsp;
+                    <input type=button value=" 关闭 " onclick="window.close()">
+                </th>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.MoneyMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Money" >
+    <id column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="TOTAL" property="total" jdbcType="DECIMAL" />
+    <result column="COU" property="cou" jdbcType="DECIMAL" />
+    <result column="PRO" property="pro" jdbcType="DECIMAL" />
+    <result column="CITY" property="city" jdbcType="DECIMAL" />
+    <result column="DIST" property="dist" jdbcType="DECIMAL" />
+    <result column="COM" property="com" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from MONEY
+    where PID = #{pid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Money" >
+    insert into MONEY (PID, TOTAL, COU,
+      PRO, CITY, DIST, COM
+      )
+    values (#{pid,jdbcType=DECIMAL}, #{total,jdbcType=DECIMAL}, #{cou,jdbcType=DECIMAL}, 
+      #{pro,jdbcType=DECIMAL}, #{city,jdbcType=DECIMAL}, #{dist,jdbcType=DECIMAL}, #{com,jdbcType=DECIMAL}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Money" >
+    update MONEY
+    set TOTAL = #{total,jdbcType=DECIMAL},
+      COU = #{cou,jdbcType=DECIMAL},
+      PRO = #{pro,jdbcType=DECIMAL},
+      CITY = #{city,jdbcType=DECIMAL},
+      DIST = #{dist,jdbcType=DECIMAL},
+      COM = #{com,jdbcType=DECIMAL}
+    where PID = #{pid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select PID, TOTAL, COU, PRO, CITY, DIST, COM
+    from MONEY
+    where PID = #{pid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PID, TOTAL, COU, PRO, CITY, DIST, COM
+    from MONEY
+  </select>
+</mapper>

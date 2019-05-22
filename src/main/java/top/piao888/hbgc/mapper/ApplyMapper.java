@@ -14,4 +14,5 @@ public interface ApplyMapper {
     List<Apply> selectAll();
 
     int updateByPrimaryKey(Apply record);
+    List<Apply> selectByAaid(Long pid);
 }

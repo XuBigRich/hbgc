@@ -1,25 +1,33 @@
 package top.piao888.hbgc.contruller;
 
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.piao888.hbgc.converter. ProjectReq2OProjectDTO;
-import top.piao888.hbgc.converter.LXCXForm2OProjectMessageDTO;
-import top.piao888.hbgc.converter.ProjectDTO2OProjectRes;
-import top.piao888.hbgc.converter.ProjectRes2OProjectDTO;
+import top.piao888.hbgc.constant.BaseConstant;
+import top.piao888.hbgc.converter.*;
+import top.piao888.hbgc.domain.Base;
 import top.piao888.hbgc.domain.Money;
+import top.piao888.hbgc.domain.Step;
 import top.piao888.hbgc.dto.ProjectDTO;
 import top.piao888.hbgc.dto.ProjectMessageDTO;
 import top.piao888.hbgc.service.XiangmuService;
+import top.piao888.hbgc.util.CookieUtil;
 import top.piao888.hbgc.util.ResultVoUtil;
 import top.piao888.hbgc.vo.Project.ProjectReq;
 import top.piao888.hbgc.vo.Project.ProjectRes;
 import top.piao888.hbgc.vo.request.ProjectUpSelectVo;
 import top.piao888.hbgc.vo.ResponseVo;
+import top.piao888.hbgc.vo.request.StepReq;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author admin
@@ -33,6 +41,8 @@ import java.util.List;
 public class XMContruller {
     @Autowired
     private XiangmuService xiangmuService;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
     /*创建市级项目前*/
     @GetMapping("beforecreatecount")
     public ResponseVo beforecreatecount(ProjectReq ProjectReq){
@@ -40,29 +50,61 @@ public class XMContruller {
     }
     /*创建区级项目前*/
     @GetMapping("beforecreatecity")
-    public ResponseVo beforecreatecity(ProjectReq ProjectReq){
-        ProjectReq.setVid(61L);
-        ProjectDTO ProjectDTO =  ProjectReq2OProjectDTO.convert(ProjectReq);
-        xiangmuService.createProject(ProjectDTO);
+    public ResponseVo beforecreatecity(ProjectReq projectReq,Cookie cookie){
+        projectReq.setVid(61L);
+
+        ProjectDTO projectDTO =  ProjectReq2OProjectDTO.convert(projectReq);
+        xiangmuService.createProject(projectDTO,cookie);
         return new ResponseVo();
+    }
+    /*创建县级项目*/
+    @GetMapping("createdistprojectbefore")
+    public ResponseVo createDistProjectbefore(){
+        Map vid=new HashMap();
+        vid.put("vid",BaseConstant.XMJB1);
+        vid.put("dname","杭州市城建局");
+        vid.put("did",77);
+        return ResultVoUtil.success(vid);
+
     }
     /*创建市级项目*/
-    @PostMapping("createcity")
-    public ResponseVo createProject(ProjectReq ProjectReq){
-        ProjectReq.setVid(62L);
-        ProjectDTO ProjectDTO =  ProjectReq2OProjectDTO.convert(ProjectReq);
-        xiangmuService.createProject(ProjectDTO);
+    @GetMapping("createcityprojectbefore")
+    public ResponseVo createCityProjectbefore(){
+        Map vid=new HashMap();
+        vid.put("vid",BaseConstant.XMJB2);
+        return ResultVoUtil.success(vid);
+    }
+    /*选择县级地区牵头部门   使用Ajax发送请求 时调用*/
+    @GetMapping("selectHeadDept")
+    public ResponseVo selectHeadDept(Long bid){
+        Map dept=xiangmuService.selectHeadDept(bid);
+        return ResultVoUtil.success(dept);
+    }
+    /*项目审批*/
+    @GetMapping("proCheck")
+    public ResponseVo proCheck(StepReq stepReq){
+        Step step=StepReq2OStep.convert(stepReq);
+        xiangmuService.proCheck(step);
+    }
+    /*创建市级项目*/
+    @PostMapping("createproject")
+    public ResponseVo createProject(ProjectReq projectReq,HttpServletRequest request){
+        Cookie[] cookie=request.getCookies();
+        ProjectDTO projectDTO =  ProjectReq2OProjectDTO.convert(projectReq);
+        xiangmuService.createProject(projectDTO,cookie[0]);
         return new ResponseVo();
     }
+
     @GetMapping("/alldept")
     public String allDept(){
         return null;
     }
     /*查询所有项目*/
     @PostMapping("/findproject")
-    public ResponseVo<List> findProject(ProjectUpSelectVo projectUpSelectVo){
+    public ResponseVo<List> findProject(HttpServletRequest req, ProjectUpSelectVo projectUpSelectVo){
+        Cookie cookie= CookieUtil.get(req);
         ProjectMessageDTO projectMessageDTO=LXCXForm2OProjectMessageDTO.convert(projectUpSelectVo);
-        List<ProjectMessageDTO> projectMessageDTOList=xiangmuService.xmlx(projectMessageDTO);
+        List<ProjectMessageDTO> projectMessageDTOList=xiangmuService.xmcx(projectMessageDTO,cookie);
         return ResultVoUtil.success(projectMessageDTOList);
     }
     /*资金信息*/

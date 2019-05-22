@@ -1,5 +1,7 @@
 package top.piao888.hbgc.util;
 
+import top.piao888.hbgc.constant.CookieConstant;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +20,10 @@ public class CookieUtil {
        cookie.setMaxAge(maxAge);
        res.addCookie(cookie);
     }
-    public static Cookie get(HttpServletRequest res,String name){
+    public static Cookie get(HttpServletRequest res){
        Cookie[] cookies= res.getCookies();
        for(Cookie cookie:cookies){
-           if(cookie.getName().contains(name)){
+           if(cookie.getName().contains(CookieConstant.TOKEN)){
                return cookie;
            }
        }

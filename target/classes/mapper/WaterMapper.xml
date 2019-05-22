@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.piao888.hbgc.mapper.WaterMapper" >
+  <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Water" >
+    <id column="WID" property="wid" jdbcType="DECIMAL" />
+    <result column="PID" property="pid" jdbcType="DECIMAL" />
+    <result column="COD" property="cod" jdbcType="DECIMAL" />
+    <result column="AM" property="am" jdbcType="DECIMAL" />
+    <result column="TP" property="tp" jdbcType="DECIMAL" />
+    <result column="PH" property="ph" jdbcType="DECIMAL" />
+    <result column="DES" property="des" jdbcType="VARCHAR" />
+    <result column="TIM" property="tim" jdbcType="DATE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from WATER
+    where WID = #{wid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="top.piao888.hbgc.domain.Water" useGeneratedKeys="true" keyProperty="wid" >
+    insert into WATER (PID, COD, AM,
+      TP, PH, DES, TIM
+      )
+    values (#{pid,jdbcType=DECIMAL}, #{cod,jdbcType=DECIMAL}, #{am,jdbcType=DECIMAL}, 
+      #{tp,jdbcType=DECIMAL}, #{ph,jdbcType=DECIMAL}, #{des,jdbcType=VARCHAR}, #{tim,jdbcType=DATE}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="top.piao888.hbgc.domain.Water" >
+    update WATER
+    set PID = #{pid,jdbcType=DECIMAL},
+      COD = #{cod,jdbcType=DECIMAL},
+      AM = #{am,jdbcType=DECIMAL},
+      TP = #{tp,jdbcType=DECIMAL},
+      PH = #{ph,jdbcType=DECIMAL},
+      DES = #{des,jdbcType=VARCHAR},
+      TIM = #{tim,jdbcType=DATE}
+    where WID = #{wid,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select WID, PID, COD, AM, TP, PH, DES, TIM
+    from WATER
+    where WID = #{wid,jdbcType=DECIMAL}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select WID, PID, COD, AM, TP, PH, DES, TIM
+    from WATER
+  </select>
+</mapper>

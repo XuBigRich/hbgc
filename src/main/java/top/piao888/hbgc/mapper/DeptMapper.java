@@ -14,4 +14,6 @@ public interface DeptMapper {
     List<Dept> selectAll();
 
     int updateByPrimaryKey(Dept record);
+/*根据地区与单位类别查询*/
+    List<Dept> selectByBidAndTid(Dept record);
 }

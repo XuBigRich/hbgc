@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.piao888.hbgc.mapper.Roles_FunsMapper">
+    <resultMap id="BaseResultMap" type="top.piao888.hbgc.domain.Roles_Funs">
+        <result column="RID" property="rid" jdbcType="DECIMAL"/>
+        <result column="FID" property="fid" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <update id="updateByRid" parameterType="top.piao888.hbgc.domain.Roles_Funs">
+        update ROLES_FUNS U set FID=#{fid} where RID=#{rid}
+    </update>
+    <update id="updateByFid" parameterType="top.piao888.hbgc.domain.Roles_Funs">
+        update ROLES_FUNS U SET RID=#{rid} WHERE FID=#{fid}
+    </update>
+    <insert id="insert" parameterType="top.piao888.hbgc.domain.Roles_Funs" >
+        insert into ROLES_FUNS(RID,FID) values(#{rid},#{fid})
+    </insert>
+    <delete id="deleeteByRidOrFid" parameterType="java.lang.Long">
+        delete from ROLES_FUNS where RID=#{rid}
+    </delete>
+    <select id="selectByRidOrFid" resultMap="BaseResultMap" parameterType="top.piao888.hbgc.domain.Roles_Funs">
+        SELECT * FROM ROLES_FUNS
+        <trim prefix="where" prefixOverrides="and">
+          <if test="rid!=null and rid!=''">
+              and RID=#{rid}
+          </if>
+          <if test="fid!=null and fid!=''">
+              and FID=#{fid}
+          </if>
+        </trim>
+    </select>
+</mapper>

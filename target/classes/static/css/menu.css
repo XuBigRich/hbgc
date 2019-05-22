@@ -1,0 +1,40 @@
+a{
+    text-decoration:none;
+    line-height:20px;
+    width:100%;
+    text-align:left;
+    border-bottom:1px solid #DEDEDE;
+    color:black;
+    font-size:10pt;
+    padding-left:20px;
+}
+a:hover{
+    font-weight:bold;
+    color:white;
+    background-image:url('../img/bg.png');
+    background-size:100% 100%;
+}
+.mx{
+    color:white;
+    font-size:10pt;
+    padding-left:20px;
+    list-style-type: none;
+    background-size:100% 100%;
+    background-image:url('../img/left-nav1.gif');
+}
+.zx{
+    list-style-type: none;
+    background-size:100% 100%;
+    background-image:url('../img/left-nav2.gif');
+}
+div{
+    margin:0px;padding:0px;
+    /*border:1px solid deepskyblue;*/
+    text-align: left;
+}
+.cd{
+    margin:0px;padding:0px;
+    /*border:1px solid deepskyblue;*/
+    /*不管用*/
+    /*text-align: left;*/
+}

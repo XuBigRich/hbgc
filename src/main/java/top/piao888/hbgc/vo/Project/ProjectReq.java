@@ -2,6 +2,7 @@ package top.piao888.hbgc.vo.Project;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
+import top.piao888.hbgc.constant.BaseConstant;
 
 import java.io.File;
 import java.util.Date;
@@ -28,9 +29,7 @@ public class ProjectReq {
     /*项目级别ID，外键，分为：区县级项目，市级项目   -- pid=8  bid=61-62*/
     private Long vid;
     /*申请补助金类型ID 外键：                       --pid=10 bid=67-69*/
-    private Long stat=0L;
-    /*项目状态ID，外键                        --pid =4  bid=46 - 48*/
-    private Long kid;
+    private Long aid;
     /*项目概述 */
     private String mary;
     /*项目名称*/

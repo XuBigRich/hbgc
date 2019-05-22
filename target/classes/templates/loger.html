@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link type="text/css" rel="stylesheet" href="../static/common.css">
+    <link type="text/css" rel="stylesheet" href="../static/xu.css">
+    <meta charset="UTF-8">
+</head>
+<style>
+    #tab{
+        height: 100%;
+        width: 100%;
+        border:solid white;
+
+    }
+    #t0{
+        width: 120px;
+    }
+    #t1{
+        width: 100px;
+    }
+    #t2{
+        width: 20px;
+    }
+    #t3{
+        width: 88px;
+    }
+    #t4{
+        width: 200px;
+    }
+    #t5{
+        width: 500px;
+    }
+    a{
+        font-size: large ;
+    }
+</style>
+<script type="text/javascript" src="../static/js/datetime.js"></script>
+<body scroll="no" >
+    <table background="../static/img/bg2.gif" align="center" id="tab" border="0">
+        <tr>
+           <!-- <td id ="t0" align="right" >当前登陆：</td>
+            <td id ="t1" th:text="${session.user.dept.name}"/>
+            <td id ="t2"align="center">>></td>
+            <td id ="t3" th:text="${session.user.name}"/>
+            <td id ="t4" th:text="${session.user.roles.name}"/>-->
+            <td>
+                <span th:text="|当前登陆：${map.dname}>>>${map.name}|"/>
+            </td>
+            <td th:text="${map.rname}"/>
+            <td th:text="|session aid:${session.aid}|"/>
+            <td id ="t5" align="center"/>
+            <td id ="t6" align="center">
+                <a onclick="showTime()" href="#">修改密码</a>&nbsp;&nbsp;
+                <a href="#" target="_top" a th:onclick="|confirm('是否确定退出?')|";>退出系统</a>
+            </td>
+        </tr>
+    </table>
+</body>
+<script>
+    setInterval(showTime,1000);
+</script>
+</html>
