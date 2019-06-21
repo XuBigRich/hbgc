@@ -1,5 +1,6 @@
 package top.piao888.hbgc.domain;
 
+
 import lombok.Data;
 
 import java.io.Serializable;

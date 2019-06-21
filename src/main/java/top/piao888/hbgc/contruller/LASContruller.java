@@ -31,7 +31,7 @@ public class LASContruller {
     public String login(HttpServletResponse response,HttpServletRequest request, @RequestParam String username, @RequestParam String password, Model model){
         Accs accs= zhanghaoService.login(response,username,password);  //响应式 设置cookie
 //       Accs accs= zhanghaoService.login(request,username,password);  //请求式 设置cookie
-
+        /*找出rid*/
         List menu=zhanghaoService.menu(accs.getRid());
         Map map=new HashMap();
         map.put("name",accs.getName());

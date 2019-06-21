@@ -58,40 +58,41 @@ public class XiangmuService {
     public List<ProjectMessageDTO> xmcx(ProjectMessageDTO projectMessageDTO,Cookie cookie){
         String sessionkey=cookie.getValue();
         String session=redisTemplate.opsForValue().get(sessionkey);
+        /*session缓存的是aid*/
         Long result= Long.parseLong(session);
         List<ProjectMessageDTO> resultDTOList=new ArrayList<>();
         Accs accs=accsMapper.selectByPrimaryKey(result);
         Long did=accs.getDid();
         Dept dept=deptMapper.selectByPrimaryKey(did);
-        Long tid=dept.getTid();   //单位类型   申报-建设-牵头-生态办
+        Long rid=accs.getRid();   //单位类型   申报-建设-牵头-生态办
         Long bid=dept.getBid();  //所属区县
         projectMessageDTO.setBid(bid);
         /*1.县牵头部门登录后，可以查看属于该部门的待审项目。
         县牵头部门登录后,可以查看项目资金信息，查看历史审批记录。
         县牵头部门可以进行项目审核，在审核过程中除填写审核意见外，可上传附件。*/
-        if(tid==BaseConstant.DWLB3){
+        if(rid==BaseConstant.DWLB3){
             /*如果当前状态是项目申请状态 由牵头部门确定*/
-            if(kid=25&&curdid=xxx){}
+         /*   if(kid=25&&curdid=xxx){}
             projectMessageDTO.
-            resultDTOList=cx(projectMessageDTO);
+            resultDTOList=cx(projectMessageDTO);*/
         }
         /*2.县生态办和市牵头部门登录后，可以查看到该县区申报项目和下属单位申报项目。
         县生态办和市牵头部门登录后，可以查看县级或市级项目资金、项目审核、历史审核记录，项目信息。
         县生态办和市牵头部门审核后，不能再次审核，项目进入市生态办审核,审核时可上传附件。*/
-        if(tid==BaseConstant.DWLB4||tid==BaseConstant.DWLB5){
+        if(rid==BaseConstant.DWLB4||rid==BaseConstant.DWLB5){
             resultDTOList=cx(projectMessageDTO);
         }
         //3.如果是市生态办  可以查看到该环节的所有待审项目。
-        if(tid==BaseConstant.DWLB6){
+        if(rid==BaseConstant.DWLB6){
             resultDTOList=cx(projectMessageDTO);
         }
         //4.如果是申报单位 只可以查看自己的申报项目
-        if(tid==BaseConstant.DWLB1){
+        if(rid==BaseConstant.DWLB1){
            projectMessageDTO.setAaid(result);
            resultDTOList=cx(projectMessageDTO);
         }
         /*如果是超级管理员 那可就牛逼了*/
-        if(result==89)cx(projectMessageDTO);
+        if(rid==RolesConstant.XTGLY) resultDTOList=cx(projectMessageDTO);
         return resultDTOList;
     }
     /*由项目查询调用 负责根据条件查询*/
@@ -101,6 +102,8 @@ public class XiangmuService {
         List<ProjectMessageDTO> resultDTOList=new ArrayList<>();
         for(Project project:projectList){
             BeanUtils.copyProperties(project,resultDTO);
+            /*CacheManager 会 缓存 Base表中的bid 和name*/
+            //这个地方作用是通过bid 展现出 他是什么级别的项目
             String LevelDes=((Base)(CacheManager.get(project.getVid().toString()))).getName();
             String StatDes=((Base)CacheManager.get(project.getStat().toString())).getName();
             resultDTO.setLevelDes(LevelDes);
@@ -196,7 +199,7 @@ public class XiangmuService {
     public Map selectHeadDept(Long bid){
         Dept dept=new Dept();
         dept.setBid(bid);
-        dept.setTid(RolesConstant.XQTBM);
+        dept.setTid(BaseConstant.DWLB3);
         List<Dept> depts=deptMapper.selectByBidAndTid(dept);
         Map map=new HashMap();
 //        depts.stream().peek(e->map.put(e.getDid(),e.getName())).collect(Collectors.toList());
@@ -328,8 +331,8 @@ public class XiangmuService {
         apply.setCurdid(pdid);
         applyMapper.updateByPrimaryKey(apply);
         }
-        step.setPid(pid);
-        step.set
+//        step.setPid(pid);
+//        step.set
     }
     /**
      * 查询当前审批部门的上级部门

@@ -1,6 +1,5 @@
 package top.piao888.hbgc.service;
 
-import com.sun.xml.internal.ws.handler.HandlerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -9,12 +8,10 @@ import top.piao888.hbgc.constant.CookieConstant;
 import top.piao888.hbgc.constant.RedisConstant;
 import top.piao888.hbgc.domain.*;
 import top.piao888.hbgc.enums.ResultEnum;
-import top.piao888.hbgc.enums.RolesEnum;
 import top.piao888.hbgc.exception.HbgcException;
 import top.piao888.hbgc.mapper.*;
 import top.piao888.hbgc.util.CookieUtil;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -32,7 +29,7 @@ public class ZhanghaoService {
     @Autowired
     private AccsMapper accsMapper;
     @Autowired
-    private FunssMapper funsMapper;
+    private FunsMapper funsMapper;
     @Autowired
     private RolesMapper rolesMapper;
     @Autowired
@@ -101,11 +98,12 @@ public class ZhanghaoService {
 //        List<Funs> funs1=funsMapper.selectMenu();
         List<Roles> roless=rolesMapper.selectFunsByRid(rid);
         Roles rfs=roless.get(0);
-        Funss funs;
-        List<Funss> menu=funsMapper.selectMenu();
+        Funs funs;
+        /*获取主菜单*/
+        List<Funs> menu=funsMapper.selectMenu();
        for(int f=0;f<menu.size();f++){
-           for(int i=0;i<rfs.getFunss().size();i++){
-               funs= rfs.getFunss().get(i);
+           for(int i=0;i<rfs.getFuns().size();i++){
+               funs= rfs.getFuns().get(i);
                 if(funs.getPfid()==menu.get(f).getFid()){
                     menu.get(f).getChildFuns().add(funs);
                 }

@@ -3,10 +3,9 @@ package top.piao888.hbgc.contruller;
 import jdk.nashorn.internal.ir.RuntimeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import top.piao888.hbgc.constant.BaseConstant;
 import top.piao888.hbgc.converter.*;
 import top.piao888.hbgc.domain.Base;
@@ -36,7 +35,7 @@ import java.util.Map;
  * @Description TODO
  * @createTime 2019年04月24日 18:12:00
  */
-@RestController
+@Controller
 @RequestMapping("/xm")
 public class XMContruller {
     @Autowired
@@ -59,13 +58,13 @@ public class XMContruller {
     }
     /*创建县级项目*/
     @GetMapping("createdistprojectbefore")
+    @ResponseBody
     public ResponseVo createDistProjectbefore(){
         Map vid=new HashMap();
         vid.put("vid",BaseConstant.XMJB1);
         vid.put("dname","杭州市城建局");
         vid.put("did",77);
         return ResultVoUtil.success(vid);
-
     }
     /*创建市级项目*/
     @GetMapping("createcityprojectbefore")
@@ -85,6 +84,7 @@ public class XMContruller {
     public ResponseVo proCheck(StepReq stepReq){
         Step step=StepReq2OStep.convert(stepReq);
         xiangmuService.proCheck(step);
+        return null;
     }
     /*创建市级项目*/
     @PostMapping("createproject")
@@ -99,13 +99,17 @@ public class XMContruller {
     public String allDept(){
         return null;
     }
-    /*查询所有项目*/
-    @PostMapping("/findproject")
-    public ResponseVo<List> findProject(HttpServletRequest req, ProjectUpSelectVo projectUpSelectVo){
+    /*项目立项按钮 会查询所有项目 并 可以通过查询条件查询*/
+    @GetMapping("/allProject")
+    public String findProject(HttpServletRequest req, ProjectUpSelectVo projectUpSelectVo, Model model){
         Cookie cookie= CookieUtil.get(req);
         ProjectMessageDTO projectMessageDTO=LXCXForm2OProjectMessageDTO.convert(projectUpSelectVo);
         List<ProjectMessageDTO> projectMessageDTOList=xiangmuService.xmcx(projectMessageDTO,cookie);
-        return ResultVoUtil.success(projectMessageDTOList);
+        HashMap hashMap=new HashMap();
+        hashMap.put("project",projectMessageDTOList);
+        hashMap.put("state",null);
+        model.addAttribute(hashMap);
+        return "projectapproval";
     }
     /*资金信息*/
     @GetMapping("findmoney")

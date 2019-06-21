@@ -10,5 +10,5 @@ public class Roles  implements Serializable {
     private Long rid;
     private String name;
     private String des;
-    private List<Funss> funss;
+    private List<Funs> funs;
 }
