@@ -8,3 +8,11 @@ th{
 select{
     width:155px;
 }
+.title{
+    margin:0 auto;
+    background-image: url("../img/bg2.gif");
+}
+#title{
+    width:788px;
+    margin:0 auto;
+}
